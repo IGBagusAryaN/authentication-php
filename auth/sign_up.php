@@ -13,7 +13,9 @@ if (isset($_POST['sign_up'])) {
     $name = $_POST['name'];
     $email = $_POST['email'];
     // $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    $hash_password = hash('sha256', $password);
+    // $hash_password = hash('sha256', $password);
+    $password = $_POST['password'];
+    $hash_password = password_hash($password, PASSWORD_DEFAULT);
 
     try {
         $sql = "INSERT INTO users (name, email, password) VALUES 
@@ -44,8 +46,6 @@ if (isset($_POST['sign_up'])) {
     <link rel="stylesheet" href="../styles/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-
 </head>
 
 <body>
@@ -85,7 +85,7 @@ if (isset($_POST['sign_up'])) {
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script>
         <?php if (!empty($status)): ?>
             Swal.fire({

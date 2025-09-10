@@ -3,7 +3,7 @@
 $hostname="localhost";
 $username="root";
 $password="";
-$database_name="auth_crud";
+$database_name="snippet_vault";
 
 
 $db = mysqli_connect($hostname, $username, $password, $database_name);

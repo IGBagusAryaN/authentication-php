@@ -8,6 +8,13 @@ if (isset($_POST['logout'])){
     exit;
 }
 
+if (!isset($_SESSION['is_login']) || $_SESSION['is_login'] !== true) {
+    $_SESSION['status'] = 'Error';
+    $_SESSION['message'] = 'You must log in first.';
+    header('location: auth/sign_in.php');
+    exit;
+}
+
 $status = '';
 $message = '';
 $icon = '';

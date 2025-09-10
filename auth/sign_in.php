@@ -23,26 +23,29 @@ if (isset($_SESSION['status'])) {
 if (isset($_POST['sign_in'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
-
-    $sql = "SELECT * FROM users WHERE email='$email' AND password='$password'";
-
-    // tampung disini
+    $sql = "SELECT * FROM users WHERE email='$email' LIMIT 1";
     $results = $db->query($sql);
 
     if ($results->num_rows > 0) {
         $data = $results->fetch_assoc();
-        $_SESSION['name'] = $data['name'];
-        $_SESSION['is_login'] = true;
-        $_SESSION['status'] = 'Success';
-        $_SESSION['message'] = 'You have successfully logged in.';
-        header("location: ../dashboard.php");
-    } else {
-        // echo "data gaada";
-        $_SESSION['status'] = 'Error';
-        $_SESSION['message'] = 'Incorrect username or password.';
 
+        if (password_verify($password, $data['password'])) {
+            $_SESSION['name'] = $data['name'];
+            $_SESSION['is_login'] = true;
+            $_SESSION['status'] = 'Success';
+            $_SESSION['message'] = 'You have successfully logged in.';
+            header("location: ../dashboard.php");
+            exit;
+        } else {
+            $_SESSION['status'] = 'Error';
+            $_SESSION['message'] = 'Incorrect password.';
+            header("location: sign_in.php"); // ⬅️ tambahkan ini
+            exit;
+        }
+    } else {
+        $_SESSION['status'] = 'Error';
+        $_SESSION['message'] = 'Email not found.';
     }
-    $db->close();
 }
 ?>
 
